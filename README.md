@@ -1,5 +1,7 @@
 # aioredis_lock
 
+[![CircleCI](https://circleci.com/gh/mrasband/aioredis-lock.svg?style=svg)](https://circleci.com/gh/mrasband/aioredis-lock)
+
 Implementation of distributed locking with [aioredis](https://github.com/aio-libs/aioredis), an asyncio based redis client.
 
 This is a standalone lib until, and if, [aio-libs/aioredis#573](https://github.com/aio-libs/aioredis/pull/573) is accepted.
