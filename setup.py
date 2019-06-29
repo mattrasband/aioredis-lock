@@ -2,7 +2,7 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 with open(Path(__file__).parent / "README.md") as f:
@@ -22,6 +22,8 @@ setup(
     url="https://github.com/mrasband/aioredis-lock",
     version=__version__,
     classifiers=[
+        "Development Status :: 4 - Beta",
+        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
