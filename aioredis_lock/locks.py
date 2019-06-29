@@ -5,7 +5,7 @@ import time
 import uuid
 from typing import List, Optional
 
-from aioredis import ConnectionsPool
+from aioredis import Redis
 
 from .errors import LockTimeoutError
 from .lua_scripts import ACQUIRE_SCRIPT, EXTEND_SCRIPT, RELEASE_SCRIPT, RENEW_SCRIPT
@@ -25,7 +25,7 @@ class RedisLock:
     """
 
     # The aioredis pool or connection object
-    pool_or_conn: ConnectionsPool
+    pool_or_conn: Redis
 
     # The key to lock on in redis
     key: str
