@@ -3,9 +3,9 @@ import asyncio
 import dataclasses
 import time
 import uuid
-from typing import List, Optional
+from typing import List, Optional, Union
 
-from aioredis import ConnectionsPool
+from aioredis import ConnectionsPool, Redis, RedisConnection
 
 from .errors import LockTimeoutError
 from .lua_scripts import ACQUIRE_SCRIPT, EXTEND_SCRIPT, RELEASE_SCRIPT, RENEW_SCRIPT
@@ -25,7 +25,7 @@ class RedisLock:
     """
 
     # The aioredis pool or connection object
-    pool_or_conn: ConnectionsPool
+    pool_or_conn: Union[ConnectionsPool, Redis, RedisConnection]
 
     # The key to lock on in redis
     key: str
