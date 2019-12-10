@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  build:
+  build-3.7: &build
     parallelism: 1
     working_directory: ~/app
     docker:
@@ -27,7 +27,7 @@ jobs:
 
       - run: |
           source .venv/bin/activate
-          tox
+          tox -e py37,fmt,lint
 
       - save_cache:
           key: 'tox-{{ checksum "tox.ini" }}-{{ checksum "setup.py" }}'
@@ -36,3 +36,46 @@ jobs:
 
       - store_test_results:
           path: .tox/py37/artifacts/
+
+  build-3.8:
+    parallelism: 1
+    working_directory: ~/app
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - 'venv-3.8'
+      - restore_cache:
+          keys:
+            - 'tox-3.8-{{ checksum "tox.ini" }}-{{ checksum "setup.py" }}'
+
+      - run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install -U tox
+
+      - save_cache:
+          key: 'venv-3.8'
+          paths:
+            - .venv
+
+      - run: |
+          source .venv/bin/activate
+          tox -e py38
+
+      - save_cache:
+          key: 'tox-3.8-{{ checksum "tox.ini" }}-{{ checksum "setup.py" }}'
+          paths:
+            - .tox
+
+      - store_test_results:
+          path: .tox/py38/artifacts/
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build-3.7
+      - build-3.8

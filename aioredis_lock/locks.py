@@ -18,7 +18,7 @@ def token_factory() -> str:
     return str(uuid.uuid4())
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass  # pylint: disable=too-many-instance-attributes
 class RedisLock:
     """
     Implementation of distributed locking with aioredis.
