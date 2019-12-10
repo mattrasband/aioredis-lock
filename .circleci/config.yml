@@ -41,3 +41,10 @@ jobs:
     <<: *build
     docker:
       - image: circleci/python:3.8.0-node-browsers
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build-3.7
+      - build-3.8
