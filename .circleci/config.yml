@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  build:
+  build-3.7: &build
     parallelism: 1
     working_directory: ~/app
     docker:
@@ -36,3 +36,8 @@ jobs:
 
       - store_test_results:
           path: .tox/py37/artifacts/
+
+  build-3.8:
+    <<: *build
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
