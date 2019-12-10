@@ -69,7 +69,7 @@ class RedisLock:
         return self._renew_script
 
     async def __aenter__(self):
-        if await self.acquire(self.key, self.timeout, self.wait_timeout):
+        if await self.acquire(self.timeout, self.wait_timeout):
             return self
 
         raise LockTimeoutError("Unable to acquire lock within timeout")
@@ -83,11 +83,10 @@ class RedisLock:
             await self.pool_or_conn.get(self.key)
         ) == self._token.encode()  # pylint: disable=no-member
 
-    async def acquire(self, key, timeout=30, wait_timeout=30) -> bool:
+    async def acquire(self, timeout=30, wait_timeout=30) -> bool:
         """
         Attempt to acquire the lock
 
-        :param key: Lock key
         :param timeout: Number of seconds until the lock should timeout. It can
                         be extended via extend
         :param wait_timeout: How long to wait before aborting the lock request
@@ -97,7 +96,7 @@ class RedisLock:
         while True:
             if await self._script_exec(
                 (await self.acquire_script()),
-                keys=[key],
+                keys=[self.key],
                 args=[self._token, timeout * 1000],
             ):
                 return True
