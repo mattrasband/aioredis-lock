@@ -16,7 +16,7 @@ def redis_server():
 
 @pytest.fixture
 async def redis_pool(event_loop):
-    pool = await aioredis.create_redis_pool("redis://127.0.0.1:6380/0", loop=event_loop)
+    pool = await aioredis.create_redis_pool("redis://127.0.0.1:6380/0")
     yield pool
     pool.close()
     await pool.wait_closed()
@@ -24,7 +24,7 @@ async def redis_pool(event_loop):
 
 @pytest.fixture
 async def redis_connection(event_loop):
-    conn = await aioredis.create_redis("redis://127.0.0.1:6380/1", loop=event_loop)
+    conn = await aioredis.create_redis("redis://127.0.0.1:6380/1")
     yield conn
     conn.close()
     await conn.wait_closed()
