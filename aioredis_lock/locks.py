@@ -81,7 +81,7 @@ class RedisLock:
         """Determine if the instance is the owner of the lock"""
         return (
             await self.pool_or_conn.get(self.key)
-        ) == self._token.encode()  # pylint: disable=no-member
+        ) == self._token  # pylint: disable=no-member
 
     async def acquire(self, timeout=30, wait_timeout=30) -> bool:
         """
